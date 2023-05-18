@@ -85,8 +85,8 @@ export const preFormatColumn = (
                     {cellProps.row[cellProps.column.key]}
                 </div>
             )
-            if (formatter) {
-                const Formatter = formatter
+            const Formatter = formatter
+            if (Formatter) {
                 // 如果字符串不超过对应的长度,则使用默认的div
                 format = (cellProps: FormatterProps) => (
                     <div
@@ -111,34 +111,40 @@ export const preFormatColumn = (
                 value: colRef
             })
             if (tableProps.editorMode?.type === 'ROW' && Editor) {
-                format = (cellProps: FormatterProps) => (
-                    <div
-                        className={`${tableClassPrefix}-cell`}
-                        style={{
-                            textAlign: bodyTextAlign,
-                        }}>
-                        {
-                            cellProps.row[tableProps.rowKey!] !== tableProps.editorMode?.rowId ? (
-                                cellProps.row[cellProps.column.key]
-                            ) : (
-                                <Editor
-                                    ref={colRef}
-                                    value={cellProps.row[cellProps.column.key]}
-                                    column={cellProps.column}
-                                    row={cellProps.row}
-                                    height={29}
-                                    onCommit={() => {
-                                        // eslint-disable-next-line no-param-reassign
-                                        cellProps.row[cellProps.column.key] = colRef.current?.getValue?.()
-                                    }}
-                                    onCommitCancel={() => {
-                                    }}
-                                    onOverrideKeyDown={() => {
-                                    }}
-                                />
-                            )}
-                    </div>
-                )
+                format = (cellProps: FormatterProps) => {
+                    let tempFormatter = cellProps.row[cellProps.column.key]
+                    if (Formatter != null) {
+                        tempFormatter = <Formatter {...cellProps} />
+                    }
+                    return (
+                        <div
+                            className={`${tableClassPrefix}-cell`}
+                            style={{
+                                textAlign: bodyTextAlign,
+                            }}>
+                            {
+                                cellProps.row[tableProps.rowKey!] !== tableProps.editorMode?.rowId ? (
+                                    tempFormatter
+                                ) : (
+                                    <Editor
+                                        ref={colRef}
+                                        value={cellProps.row[cellProps.column.key]}
+                                        column={cellProps.column}
+                                        row={cellProps.row}
+                                        height={29}
+                                        onCommit={() => {
+                                            // eslint-disable-next-line no-param-reassign
+                                            cellProps.row[cellProps.column.key] = colRef.current?.getValue?.()
+                                        }}
+                                        onCommitCancel={() => {
+                                        }}
+                                        onOverrideKeyDown={() => {
+                                        }}
+                                    />
+                                )}
+                        </div>
+                    )
+                }
                 return format
             }
 
