@@ -1,3 +1,4 @@
+// @ts-check
 import React, { Suspense, useEffect } from 'react';
 
 import {
@@ -55,8 +56,10 @@ interface RouterProps {
     routes: Component[]
 }
 
+const BrowserRouters = BrowserRouter as any
+
 export const Router = ({ routes, layout: Layout }: RouterProps) => (
-    <BrowserRouter>
+    <BrowserRouters>
         <Layout>
             <Suspense fallback={<Loading />}>
                 <Switch>
@@ -73,5 +76,5 @@ export const Router = ({ routes, layout: Layout }: RouterProps) => (
                 </Switch>
             </Suspense>
         </Layout>
-    </BrowserRouter>
+    </BrowserRouters>
 )
