@@ -22,7 +22,7 @@ export default () => {
                 height: 500,
                 overflow: 'scroll'
             }}
-        >   
+        >
             <Button
                 onClick={() => {
                     setGroup(['dateBirth', 'username'])
@@ -70,8 +70,8 @@ export default () => {
 
             <Button
                onClick={() => {
-                   alert(JSON.stringify(table.current?.getRowEditData())) 
-                }} 
+                   alert(JSON.stringify(table.current?.getRowEditData()))
+                }}
             >
                 保存编辑结果
             </Button>
@@ -93,7 +93,7 @@ export default () => {
                 getPopupContainer={(element: HTMLDivElement) => {
                     return element.parentElement!
                 }}
-            
+                enableCellCopyPaste={false}
                 onBeforeGroupData={(data) => {
                     console.log(JSON.parse(JSON.stringify(data)), '----------')
                     return data
@@ -108,7 +108,7 @@ export default () => {
                     debugger
                     console.log(data)
                 }}
-                
+
             />
             <div
                 style={{

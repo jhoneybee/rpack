@@ -104,6 +104,12 @@ export interface TableHandle extends DataGridHandle {
 
 
     getRowEditData: () => { name: string, value: any}[]
+
+    setExpandedKeys: (keys: string[], id: string) => void
+
+    getExpandedKeys: () => string[]
+
+    getGroupDatas: () => Row[]
 }
 
 export interface ColumnProps {
@@ -284,7 +290,7 @@ export interface TableProps {
     onBeforeGroupData?: (rows: GroupRowData[]) => GroupRowData[]
 
     getPopupContainer?: (element: HTMLElement ) => HTMLElement
-    
+
     renderPluginToolExt?: (globalStore: any) => ReactNode
     renderPluginToolHeight?: number
     pageSizeOptions?: string[]

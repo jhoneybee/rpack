@@ -177,7 +177,12 @@ export const Table = observer<TableProps>((props: TableProps) => {
                 }))
             },
             del: filter => store.del(filter),
-            add: (rows, start) => store.add(rows, start)
+            add: (rows, start) => store.add(rows, start),
+            setExpandedKeys: (keys, id) => {
+                store.setExpandedKeys(keys, id)
+            },
+            getExpandedKeys: () => cloneDeep(store.expandedKeys),
+            getGroupDatas: () => cloneDeep(store.groupDatas)
         }
         table.current = tempTable
     }
